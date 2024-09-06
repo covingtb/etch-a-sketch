@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Etch-a-Sketch</title>
+</head>
+<body>
+    <div id="container"></div>
+
+    <script>
+        const container = document.querySelector("#container");
+        let divArray = 0;
+
+        function createDiv() {
+            newDiv = document.createElement("div");
+            newDiv.classList.add("sketch");
+            container.appendChild(newDiv);
+        }
+
+        function createGrid(gridSize) {
+
+            for (let i = 0; i < gridSize * gridSize; i++) {
+                createDiv();
+            }
+
+            divArray = document.querySelectorAll(".sketch");
+            divArray.forEach(function(elem) {
+            elem.addEventListener("mouseover", function() {
+                elem.className = "etch";
+            });
+        });
+        }
+
+        createGrid(20)
+
+
+        let button = document.createElement("button");
+        button.textContent = "Choose Grid Size/Clear";
+        document.body.insertBefore(button, container);
+        button = document.querySelector("button");
+
+        button.addEventListener("click", () => {
+            let gridSize = prompt("How big would you like the grid to be up to 100? (X by X)");
+            gridSize = Number(gridSize);
+            if (gridSize > 100 || gridSize < 1) {
+                window.alert("ERROR: incorrect number entered. Please enter a number between 1 and 100.")
+                container.textContent = "";
+                return createGrid(20);
+            }
+            container.textContent  = '';
+            createGrid(gridSize);
+        })
+    </script>
+</body>
+</html>
